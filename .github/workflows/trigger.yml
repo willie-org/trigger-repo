@@ -21,7 +21,7 @@ jobs:
         - name: Run E2E for staging
           uses: convictional/trigger-workflow-and-wait@v1.6.1
           with:
-            owner: AnotherFullstackDev
+            owner: willie-org
             repo: child-repo
             github_token: ${{ secrets.GITHUB_TOKEN }}
             workflow_file_name: run-e2e.yml
