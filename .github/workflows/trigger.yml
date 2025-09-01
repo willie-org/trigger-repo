@@ -1,0 +1,33 @@
+name: E2E tests before release
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+    e2e-tests:
+      name: Run E2E tests
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Run E2E for staging
+          uses: convictional/trigger-workflow-and-wait@v1.6.1
+          with:
+            owner: AnotherFullstackDev
+            repo: child-repo
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            workflow_file_name: run-e2e.yml
+            ref: main
+            wait_interval: 10
+            propagate_failure: true
+            trigger_workflow: true
+            wait_workflow: true
+            client_payload: '{}'
