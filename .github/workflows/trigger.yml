@@ -15,6 +15,7 @@ jobs:
       runs-on: ubuntu-latest
 
       permissions:
+        contents: write
         actions: write
 
       steps:
@@ -31,13 +32,13 @@ jobs:
         #         workflow_id: 'run-e2e.yml',
         #         ref: 'main',
         #       })
-
+              
         - name: Run E2E for staging
           uses: convictional/trigger-workflow-and-wait@v1.6.1
           with:
             owner: willie-org
             repo: child-repo
-            github_token: ${{ secrets.TEST_TRIGGER_PAT }}
+            github_token: ${{ secrets.GITHUB_TOKEN }}
             workflow_file_name: run-e2e.yml
             ref: main
             wait_interval: 10
@@ -45,3 +46,17 @@ jobs:
             trigger_workflow: true
             wait_workflow: true
             client_payload: '{}'
+
+        # - name: Run E2E for staging
+        #   uses: convictional/trigger-workflow-and-wait@v1.6.1
+        #   with:
+        #     owner: willie-org
+        #     repo: child-repo
+        #     github_token: ${{ secrets.TEST_TRIGGER_PAT }}
+        #     workflow_file_name: run-e2e.yml
+        #     ref: main
+        #     wait_interval: 10
+        #     propagate_failure: true
+        #     trigger_workflow: true
+        #     wait_workflow: true
+        #     client_payload: '{}'
