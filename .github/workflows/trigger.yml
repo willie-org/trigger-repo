@@ -10,53 +10,56 @@ on:
   workflow_dispatch:
 
 jobs:
-    e2e-tests:
-      name: Run E2E tests
-      runs-on: ubuntu-latest
+    e2e-tests-2:
+      uses: willie-org/child-repo/.github/workflows/run-e2e.yml@main
 
-      permissions:
-        contents: write
-        actions: write
+    # e2e-tests:
+    #   name: Run E2E tests
+    #   runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
+    #   permissions:
+    #     contents: write
+    #     actions: write
 
-        # - name: Trigger Workflow
-        #   uses: actions/github-script@v6
-        #   with:
-        #     script: |
-        #       github.rest.actions.createWorkflowDispatch({
-        #         owner: context.repo.owner,
-        #         repo: 'child-repo',
-        #         workflow_id: 'run-e2e.yml',
-        #         ref: 'main',
-        #       })
+    #   steps:
+    #     - name: Checkout repository
+    #       uses: actions/checkout@v3
+
+    #     # - name: Trigger Workflow
+    #     #   uses: actions/github-script@v6
+    #     #   with:
+    #     #     script: |
+    #     #       github.rest.actions.createWorkflowDispatch({
+    #     #         owner: context.repo.owner,
+    #     #         repo: 'child-repo',
+    #     #         workflow_id: 'run-e2e.yml',
+    #     #         ref: 'main',
+    #     #       })
               
-        - name: Run E2E for staging
-          uses: convictional/trigger-workflow-and-wait@v1.6.1
-          with:
-            owner: willie-org
-            repo: child-repo
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            workflow_file_name: run-e2e.yml
-            ref: main
-            wait_interval: 10
-            propagate_failure: true
-            trigger_workflow: true
-            wait_workflow: true
-            client_payload: '{}'
+    #     - name: Run E2E for staging
+    #       uses: convictional/trigger-workflow-and-wait@v1.6.1
+    #       with:
+    #         owner: willie-org
+    #         repo: child-repo
+    #         github_token: ${{ secrets.GITHUB_TOKEN }}
+    #         workflow_file_name: run-e2e.yml
+    #         ref: main
+    #         wait_interval: 10
+    #         propagate_failure: true
+    #         trigger_workflow: true
+    #         wait_workflow: true
+    #         client_payload: '{}'
 
-        # - name: Run E2E for staging
-        #   uses: convictional/trigger-workflow-and-wait@v1.6.1
-        #   with:
-        #     owner: willie-org
-        #     repo: child-repo
-        #     github_token: ${{ secrets.TEST_TRIGGER_PAT }}
-        #     workflow_file_name: run-e2e.yml
-        #     ref: main
-        #     wait_interval: 10
-        #     propagate_failure: true
-        #     trigger_workflow: true
-        #     wait_workflow: true
-        #     client_payload: '{}'
+    #     # - name: Run E2E for staging
+    #     #   uses: convictional/trigger-workflow-and-wait@v1.6.1
+    #     #   with:
+    #     #     owner: willie-org
+    #     #     repo: child-repo
+    #     #     github_token: ${{ secrets.TEST_TRIGGER_PAT }}
+    #     #     workflow_file_name: run-e2e.yml
+    #     #     ref: main
+    #     #     wait_interval: 10
+    #     #     propagate_failure: true
+    #     #     trigger_workflow: true
+    #     #     wait_workflow: true
+    #     #     client_payload: '{}'
