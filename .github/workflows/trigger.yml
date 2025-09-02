@@ -21,27 +21,27 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v3
 
-        - name: Trigger Workflow
-          uses: actions/github-script@v6
-          with:
-            script: |
-              github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: 'child-repo',
-                workflow_id: 'run-e2e.yml',
-                ref: 'main',
-              })
-
-        # - name: Run E2E for staging
-        #   uses: convictional/trigger-workflow-and-wait@v1.6.1
+        # - name: Trigger Workflow
+        #   uses: actions/github-script@v6
         #   with:
-        #     owner: willie-org
-        #     repo: child-repo
-        #     github_token: ${{ secrets.GITHUB_TOKEN }}
-        #     workflow_file_name: run-e2e.yml
-        #     ref: main
-        #     wait_interval: 10
-        #     propagate_failure: true
-        #     trigger_workflow: true
-        #     wait_workflow: true
-        #     client_payload: '{}'
+        #     script: |
+        #       github.rest.actions.createWorkflowDispatch({
+        #         owner: context.repo.owner,
+        #         repo: 'child-repo',
+        #         workflow_id: 'run-e2e.yml',
+        #         ref: 'main',
+        #       })
+
+        - name: Run E2E for staging
+          uses: convictional/trigger-workflow-and-wait@v1.6.1
+          with:
+            owner: willie-org
+            repo: child-repo
+            github_token: ${{ secrets.TEST_TRIGGER_PAT }}
+            workflow_file_name: run-e2e.yml
+            ref: main
+            wait_interval: 10
+            propagate_failure: true
+            trigger_workflow: true
+            wait_workflow: true
+            client_payload: '{}'
